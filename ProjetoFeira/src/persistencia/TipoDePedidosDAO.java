@@ -10,29 +10,50 @@ import java.util.ArrayList;
 public class TipoDePedidosDAO implements IPedidosCRUD {
 
     private String nomeDoArquivo = null;
-
-    public TipoDePedidosDAO()  {
+    public TipoDePedidosDAO()throws Exception {
         try {
-             nomeDoArquivo = "src\\bancoDeDadaos\\tiposDePedidos.txt" ;
-             File arquivo = new File(nomeDoArquivo);
+            nomeDoArquivo = "./src/bancoDeDadaos/tiposDePedidos.txt" ;
+            File arquivo = new File(nomeDoArquivo);
 
-             if(!arquivo.exists()){
-                 arquivo.getParentFile().mkdirs();
-                 arquivo.createNewFile();
-             }
 
-        }catch (Exception e){
-            System.out.println("Erro ao criar: " + e.getMessage());
-        }
 
+
+        } catch (Exception e) {
+
+            System.out.println("Erro " + e.getMessage());
+        }  
+    }
+
+
+
+
+
+
+
+    public int geradorID()throws Exception{
+        int maiorNumero= 0;
+
+
+            for(Pedidos pedido : listaDePedidos()){
+                if(pedido.getId()>maiorNumero){
+                    maiorNumero = pedido.getId();
+                }
+            }
+
+
+        return maiorNumero +=1;
 
 
     }
+
     @Override
     public void salvar(Pedidos pedidos) throws Exception {
+        int idTemporario = geradorID();
+        pedidos.setId(idTemporario);
         FileWriter fr = new FileWriter(nomeDoArquivo, true);
         BufferedWriter br = new BufferedWriter(fr);
-        String str = pedidos.getNome() + ";" +
+        String str =pedidos.getId() + ";" +
+                pedidos.getNome() + ";" +
                 pedidos.getQuantidade() + ";" +
                 pedidos.getPreco() + "\n";
 
@@ -59,10 +80,11 @@ public class TipoDePedidosDAO implements IPedidosCRUD {
         String linha = "";
         while((linha =br.readLine()) !=null){
             String vetorStr[] = linha.split(";");
-            String nome = vetorStr[0];
-            int quantidade = Integer.parseInt(vetorStr[1]);
-            double preco = Double.parseDouble(vetorStr[2]);
-            Pedidos objPedido = new Pedidos(nome, quantidade, preco);
+            int id = Integer.parseInt(vetorStr[0]);
+            String nome = vetorStr[1];
+            int quantidade = Integer.parseInt(vetorStr[2]);
+            double preco = Double.parseDouble(vetorStr[3]);
+            Pedidos objPedido = new Pedidos(id ,nome, quantidade, preco);
             lista.add(objPedido);
 
         }
@@ -73,6 +95,16 @@ public class TipoDePedidosDAO implements IPedidosCRUD {
 
     @Override
     public void atualizar(Pedidos pedidos) throws Exception {
+        FileWriter fr = new FileWriter(nomeDoArquivo);
+        BufferedWriter br = new BufferedWriter(fr);
+        ArrayList<Pedidos> lista = null;
+        lista = this.listaDePedidos();
+        for(Pedidos obj : lista){
+            if(obj.getId() == pedidos.getId()){
+                String = 
+            }
+        }
+
 
     }
 }

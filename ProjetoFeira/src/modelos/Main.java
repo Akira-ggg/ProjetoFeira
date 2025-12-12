@@ -18,7 +18,10 @@ public class Main {
             double valor = scr.nextDouble();
             TipoDePedidosDAO tipoDePedidosDAO = new TipoDePedidosDAO();
 
-            tipoDePedidos =  new Pedidos(tipo, quantidade, valor);
+            tipoDePedidos =  new Pedidos();
+            tipoDePedidos.setNome(tipo);
+            tipoDePedidos.setQuantidade(quantidade);
+            tipoDePedidos.setPreco(valor);
 
             tipoDePedidosDAO.salvar(tipoDePedidos);
 

@@ -1,15 +1,25 @@
 package modelos;
 
 public class Pedidos {
+    int id = 0;
     private String nome = "";
     private int quantidade = 0;
     private double preco = 0;
     public Pedidos(){}
 
-    public Pedidos(String nome, int quantidade, double preco) {
+    public Pedidos(int id,String nome, int quantidade, double preco) {
+        this.id = id;
         this.nome = nome;
         this.quantidade = quantidade;
         this.preco = preco;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
